@@ -1,0 +1,29 @@
+Hello Day01 Page
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello Day01 Page</h1>
+    <input id="input-name" />
+    <button id="btn-test"> 태스트 </button>
+
+    <script>
+        console.log("hello")
+        console.log("202412308")
+        console.log("ha sunggeong")
+
+        var btnTest = document.getElementById("btn-test")
+        var inputName = document.getElementById("input-name")
+
+        btnTest.addEventListener('click',()=> {
+            //클릭하면 실행
+            console.log(" " + inputName.value + "님")
+        })
+
+    </script>
+</body>
+</html>
