@@ -11,8 +11,17 @@
         <input id="inpnum" type="number" />
         <button id="btn-ok"> ok </button>
     </div>
-    <p id="putput"> 선택한 번호 : </p>
+    <p id="output"> 선택한 번호 : </p>
 
+    <script>
+        var inpNum = document.getElementById("inpnum");
+        var btnOk = document.getElementById("btn-ok");
+        var output = document.getElementById("output");
+
+        btnOk.addEventListener("click", () => {
+            var value = inpNum.value;  
+            output.textContent = "선택한 번호 : " + value;
+        });
     </script>
 
 </body>
