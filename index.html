@@ -6,19 +6,58 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>
-        wed dev 2025 실습 저장소
-    </h1>
-    <h2>
-        개발자: ha sunggeong(학번: 202412308)
-    </h2>
-    <h3>
-        서문
-    </h3>
-    <p>
-        2025 2학기
-        웹프로그램 실습을 위한 저장소입니다.
-    </p>
+    <h1 id="counter-output">counter : 0</h1>
+    <button id="btn-inc">Inc</button>
+    <button id="btn-dec">Dec</button>
+    <butto n id="btn-reset">Reset</button>
 
+    <script>
+        var counterOutput = document.getElementById("counter-output");
+        var btnInc = document.getElementById("btn-inc");
+        var btnDec = document.getElementById("btn-dec");
+        var btnReset = document.getElementById("btn-reset");
+        var counter = 0;
+
+        btnInc.addEventListener('click', () => {
+            counter = counter + 1;
+            counterOutput.innerText = "counter : " + counter;
+        });
+
+        btnDec.addEventListener('click', () => {
+            counter = counter - 1;
+            counterOutput.innerText = "counter : " + counter;
+        });
+
+        btnReset.addEventListener('click', () => {
+            counter = 0;
+            counterOutput.innerText = "counter : " + counter;
+        });
+    </script><h1 id="counter-output">counter : 0</h1>
+    <button id="btn-inc">Inc</button>
+    <button id="btn-dec">Dec</button>
+    <butto n id="btn-reset">Reset</button>
+
+    <script>
+        var counterOutput = document.getElementById("counter-output");
+        var btnInc = document.getElementById("btn-inc");
+        var btnDec = document.getElementById("btn-dec");
+        var btnReset = document.getElementById("btn-reset");
+        var counter = 0;
+
+        btnInc.addEventListener('click', () => {
+            counter = counter + 1;
+            counterOutput.innerText = "counter : " + counter;
+        });
+
+        btnDec.addEventListener('click', () => {
+            counter = counter - 1;
+            counterOutput.innerText = "counter : " + counter;
+        });
+
+        btnReset.addEventListener('click', () => {
+            counter = 0;
+            counterOutput.innerText = "counter : " + counter;
+        });
+    </script>
 </body>
 </html>
