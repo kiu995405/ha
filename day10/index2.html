@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            color:white;
+            margin: 8px;
+        }
+
+        .type-1 {
+            overflow-wrap: normal;
+            word-break: break-all;
+        }
+        .type-2 {
+            overflow-wrap: break-word;
+            word-break: normal;
+        }
+        .type-3 {
+            overflow-wrap: anywhere;
+        }
+        .type-4 {
+            overflow-wrap: normal;
+            word-break: normal;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="box type-1">
+        aaaaaaaaaaaaaaaaaaaaaaa kkkkkkkkkkkkkkkkkkkkkkkk
+    </div>
+    <div class="box type-2">
+        Lorem ispsm dolor sit amet. comsectetur adipscing elit.
+    </div>
+    <div class="box type-3">
+        Lorem ispsm dolor sit amet. comsectetur adipscing elit.
+    </div>
+    <div class="box type-4">
+        aaaaaaaaaaaaaaaaaaaaaaa kkkkkkkkkkkkkkkkkkkkkkkk
+    </div>
+</body>
+</html>
