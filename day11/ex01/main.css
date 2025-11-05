@@ -1,0 +1,26 @@
+body {
+    margin:  0px;
+    padding: 0px;
+    background-color: blue;
+    color: white;
+}
+
+.box-1 {
+    display: flex;
+    width: 128px;
+    height: 64px;
+    background-color: black;
+    color: green;
+    justify-content: left;
+    align-items: flex-start;
+    border: 1px solid white
+
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;     /* 한 줄에 3개씩 자동으로 다음 줄로 넘어감 */
+    width: 420px;        /* 128px짜리 박스 3개 + 간격 고려 */
+    gap: 8px;            /* 박스 사이 여백 */
+    margin: 20px auto;
+}
