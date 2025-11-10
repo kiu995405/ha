@@ -1,0 +1,27 @@
+body {
+    margin:  10px;
+    padding: 0px;
+    background-color: blue;
+    color: white;
+    font-family: 'Galmuri11Condensed';
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+}
+
+@font-face {
+    font-family: 'Galmuri11Condensed';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/Galmuri11-Condensed.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
+
+.big-text {
+    font-size: 64px;
+}
+
+.mid-text {
+    font-size: 32px;
+}
