@@ -42,6 +42,11 @@ footer {
     font-size: 64px;
 }
 
-.menu_item {
+.menu-item {
     font-size: 32px;
+}
+
+.select {
+    background-color: black;
+    color: white;
 }
