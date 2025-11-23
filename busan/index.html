@@ -24,12 +24,14 @@
         font-size: 24px;
     }
 
-    .category-btn-container {
+    /* 버튼 컨테이너 */
+    .container {
+        max-width: 430px;
+        width: 100%;
         display: flex;
-        justify-content: center;
         flex-wrap: wrap;
+        justify-content: center;
         gap: 12px;
-        max-width: 430px; /* 아이폰16 화면 기준 */
         margin-bottom: 20px;
     }
 
@@ -44,7 +46,8 @@
         transition: all 0.3s ease;
         font-size: 16px;
         text-align: center;
-        flex: 1 1 120px; /* 최소 너비 지정 */
+        flex: 1 1 120px;
+        box-sizing: border-box;
     }
 
     .category-btn:hover {
@@ -59,9 +62,10 @@
         box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
+    /* 리스트 */
     #list {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: 1fr;
         gap: 15px;
         margin-top: 10px;
         max-width: 430px;
@@ -77,6 +81,7 @@
         text-align: center;
         font-weight: 600;
         transition: transform 0.2s, box-shadow 0.2s;
+        box-sizing: border-box;
     }
 
     .shop-item:hover {
@@ -84,20 +89,21 @@
         box-shadow: 0 6px 15px rgba(0,0,0,0.2);
     }
 
+    /* 상세페이지: 버튼/리스트보다 조금 작게 */
     #detail {
-    margin-top: 15px;
-    padding: 18px;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    line-height: 1.6;
-    max-width: 380px; /* 버튼/리스트보다 조금 작게 */
-    width: 100%;
-    box-sizing: border-box;
-    text-align: center; /* 중앙 정렬 */
-}
+        margin-top: 15px;
+        padding: 18px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        line-height: 1.6;
+        max-width: 380px; /* 버튼/리스트보다 작게 */
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+    }
 
-
+    /* 지도 */
     #map {
         height: 400px;
         width: 100%;
@@ -114,10 +120,6 @@
             font-size: 15px;
         }
 
-        #list {
-            grid-template-columns: 1fr;
-        }
-
         .shop-item {
             font-size: 15px;
         }
@@ -128,13 +130,13 @@
 
 <h1>Busan!!!</h1>
 
-<div class="category-btn-container">
+<div class="container category-btn-container">
     <span class="category-btn" data-category="식당">식당</span>
     <span class="category-btn" data-category="카페">카페</span>
     <span class="category-btn" data-category="소품샵">소품샵</span>
 </div>
 
-<div id="list"></div>
+<div id="list" class="container"></div>
 <div id="detail"></div>
 <div id="map"></div>
 
@@ -170,7 +172,6 @@ document.addEventListener('DOMContentLoaded', function() {
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    // 모든 카테고리 마커 생성
     let markers = [];
     for (const category in data) {
         data[category].forEach((item, index) => {
@@ -232,7 +233,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // 초기 표시
     const firstBtn = document.querySelector('.category-btn');
     firstBtn.classList.add('active');
     showCategory(firstBtn.dataset.category);
