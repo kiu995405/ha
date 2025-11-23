@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>부산 맛집 리스트</title>
+<title>Busan!!!</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 <style>
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         margin: 20px;
-        background-color: #f9f9f9;
+        background-color: #f5f5f5;
         color: #333;
     }
 
     h1 {
         text-align: center;
         color: #2c3e50;
-        margin-bottom: 30px;
+        margin-bottom: 10px;
     }
 
-    /* 카테고리 버튼 */
     .category-btn {
         padding: 12px 25px;
         margin-right: 10px;
@@ -27,77 +27,83 @@
         background: #FAECC5;
         color: #5a402c;
         font-weight: bold;
-        border: none;
+        border: 2px solid #F2CB61;
         border-radius: 8px;
-        transition: background 0.3s, transform 0.2s;
+        transition: all 0.3s ease;
         display: inline-block;
     }
 
     .category-btn:hover {
-        background: #edeae8;
+        background: #F2CB61;
+        color: #fff;
         transform: translateY(-2px);
     }
 
     .category-btn.active {
-        background: #F2CB61; /* 선택된 버튼 색상 */
+        background: #F2CB61;
+        color: #fff;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
-    /* 리스트 아이템 */
+    #list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        margin-top: 15px;
+    }
+
     .shop-item {
         padding: 15px 20px;
-        margin-bottom: 10px;
         background: #fff;
-        border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         cursor: pointer;
+        text-align: center;
+        font-weight: 600;
         transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .shop-item:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        transform: translateY(-5px);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.2);
     }
 
-    /* 상세 정보 박스 */
     #detail {
-        margin-top: 25px;
+        margin-top: 20px;
         padding: 20px;
         background: #fff;
         border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         line-height: 1.6;
     }
 
-    #detail h2 {
-        margin-top: 0;
-        color: #34495e;
+    #map {
+        height: 400px;
+        margin-top: 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
-    #detail p {
-        margin: 5px 0;
-    }
-
-    /* 반응형 */
     @media (max-width: 600px) {
         .category-btn {
-            padding: 10px 15px;
-            font-size: 14px;
+            display: block;
+            width: 100%;
+            margin-right: 0;
+        }
+
+        #list {
+            grid-template-columns: 1fr;
         }
 
         .shop-item {
-            padding: 12px 15px;
             font-size: 14px;
-        }
-
-        #detail {
-            padding: 15px;
         }
     }
 </style>
 </head>
 <body>
 
-<h1>부산 맛집 리스트</h1>
+<h1>Busan!!!</h1>
 
 <div>
     <span class="category-btn" data-category="식당">식당</span>
@@ -107,33 +113,65 @@
 
 <div id="list"></div>
 <div id="detail"></div>
+<div id="map"></div>
 
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    const categoryColors = {
+        "식당": "red",
+        "카페": "blue",
+        "소품샵": "green"
+    };
+
     const data = {
         "식당": [
-            { name: "해운대 암소갈비집", address: "부산 해운대구 중동1로 43", hours: "11:00 ~ 22:00", menu: "암소갈비, 양념갈비" },
-            { name: "부산 원조 돼지국밥", address: "부산 부산진구 새싹로 12", hours: "09:00 ~ 21:00", menu: "돼지국밥, 수육" }
+            { name: "해운대 암소갈비집", address: "부산 해운대구 중동1로 43", lat: 35.1632, lng: 129.1635, hours: "11:00 ~ 22:00", menu: "암소갈비, 양념갈비" },
+            { name: "부산 원조 돼지국밥", address: "부산 부산진구 새싹로 12", lat: 35.1665, lng: 129.0590, hours: "09:00 ~ 21:00", menu: "돼지국밥, 수육" }
         ],
         "카페": [
-            { name: "광안리 커피집", address: "부산 수영구 광안해변로 123", hours: "08:00 ~ 23:00", menu: "아메리카노, 카페라떼" },
-            { name: "남포동 카페", address: "부산 중구 중앙대로 45", hours: "09:00 ~ 22:00", menu: "카페모카, 에이드" }
+            { name: "광안리 커피집", address: "부산 수영구 광안해변로 123", lat: 35.1530, lng: 129.1185, hours: "08:00 ~ 23:00", menu: "아메리카노, 카페라떼" },
+            { name: "남포동 카페", address: "부산 중구 중앙대로 45", lat: 35.0991, lng: 129.0323, hours: "09:00 ~ 22:00", menu: "카페모카, 에이드" }
         ],
         "소품샵": [
-            { name: "해운대 소품샵", address: "부산 해운대구 구남로 77", hours: "10:00 ~ 20:00", menu: "인테리어 소품, 문구" },
-            { name: "광복동 소품샵", address: "부산 중구 광복로 101", hours: "11:00 ~ 21:00", menu: "기념품, 악세사리" }
+            { name: "해운대 소품샵", address: "부산 해운대구 구남로 77", lat: 35.1611, lng: 129.1637, hours: "10:00 ~ 20:00", menu: "인테리어 소품, 문구" },
+            { name: "광복동 소품샵", address: "부산 중구 광복로 101", lat: 35.1005, lng: 129.0321, hours: "11:00 ~ 21:00", menu: "기념품, 악세사리" }
         ]
     };
 
     const listDiv = document.getElementById('list');
     const detailDiv = document.getElementById('detail');
 
+    const map = L.map('map').setView([35.1796, 129.0756], 12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // 모든 카테고리 마커 생성
+    let markers = [];
+    for (const category in data) {
+        data[category].forEach((item, index) => {
+            const markerIcon = L.icon({
+                iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${categoryColors[category]}.png`,
+                shadowUrl: 'https://unpkg.com/leaflet/dist/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            });
+            const marker = L.marker([item.lat, item.lng], { icon: markerIcon }).addTo(map)
+                .bindPopup(`<b>${item.name}</b><br>${item.address}`);
+            marker.on('click', () => showDetail(category, index));
+            markers.push({ marker, category, index });
+        });
+    }
+
     function showCategory(category) {
-        listDiv.innerHTML = `<h2>${category}</h2>`;
+        listDiv.innerHTML = "";
         detailDiv.innerHTML = "";
 
-        if (data[category].length === 0) {
-            listDiv.innerHTML += `<p>등록된 ${category}가 없습니다.</p>`;
+        if (!data[category] || data[category].length === 0) {
+            listDiv.innerHTML = `<p>등록된 ${category}가 없습니다.</p>`;
             return;
         }
 
@@ -141,7 +179,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const div = document.createElement('div');
             div.className = 'shop-item';
             div.textContent = item.name;
-            div.addEventListener('click', () => showDetail(category, index));
+            div.addEventListener('click', () => {
+                showDetail(category, index);
+                const targetMarker = markers.find(m => m.category === category && m.index === index);
+                if (targetMarker) {
+                    map.setView(targetMarker.marker.getLatLng(), 15, { animate: true });
+                    targetMarker.marker.openPopup();
+                }
+            });
             listDiv.appendChild(div);
         });
     }
@@ -156,14 +201,10 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
     }
 
-    // 카테고리 버튼 이벤트 연결 + active 표시
     document.querySelectorAll('.category-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            // 기존 active 제거
             document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-            // 클릭한 버튼에 active 추가
             btn.classList.add('active');
-            // 카테고리 표시
             showCategory(btn.dataset.category);
         });
     });
