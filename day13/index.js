@@ -4,26 +4,44 @@ export default async function main() {
     let currentIndex = 0;
     const menuitems = document.querySelectorAll(".menu-item");
 
-    console.log(menuitems)
-
-    menuitems[currentIndex].classList.remove('selcet')
+    console.log(menuitems.length)
+    const menuitems_count = menuitems.length
 
     menuitems[currentIndex].classList.add("select")
 
     window.addEventListener("keydown", (e) => {
         console.log(e.key)
 
+        menuitems[currentIndex].classList.remove("select")
+
         if(e.key == "ArrowUp") {
             currentIndex--
             if(currentIndex < 0) {
-                currentIndex = 2
+                currentIndex = menuitems_count-1
             }
         }
         else if(e.key == "ArrowDown") {
             currentIndex++
-            currentIndex %= 3
+            currentIndex %=menuitems_count
         }
+
+        const mainMenu = document.querySelector('#main-menu')
+        const creditScreen = document.querySelector('#credit-screen')
+        let currentIndex = "mainMenu"
+
+        else if(e.key == "Enter") {
+            console.log(menuitems[currentIndex].dataset.action)
+            const select_action = menuitems[currentIndex].dataset.action
+
+            if(select_action == 'credit') {
+                mainMenu.classList.remove('hide')
+                creditScreen.classList.remove('hide')
+                currentIndex = "creditScreen"
+            }
+        }
+
         console.log(currentIndex)
         menuitems[currentIndex].classList.add('select')
+ 
     })
     }

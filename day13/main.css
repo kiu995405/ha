@@ -48,5 +48,9 @@ footer {
 
 .select {
     background-color: black;
-    color: white;
+    color: yellow;
+}
+
+.hide {
+    display: none;
 }
