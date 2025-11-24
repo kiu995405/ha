@@ -14,84 +14,97 @@
 
 body{
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin:0; padding:16px; background:var(--bg); color:#333;
-  display:flex; flex-direction:column; align-items:center;
+  margin:0; 
+  padding:16px; 
+  background:var(--bg); 
+  color:#333; 
+  display:flex; 
+  flex-direction:column; 
+  align-items:center;
 }
 
 h1{
-  font-size:24px; color:#2c3e50; margin:6px 0 6px; text-align:center;
+  font-size:24px; 
+  color:#2c3e50; 
+  margin:6px 0 6px; 
+  text-align:center;
 }
 
-.bar{
-  max-width:var(--maxw);
-  width:100%;
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  justify-content:center;
-  margin-bottom:12px;
+/* ----------------- 메인 카테고리 ----------------- */
+#categoryBar {
+  max-width: var(--maxw);
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  flex-wrap: nowrap;              /* 한 줄로 고정 */
+  justify-content: space-between;
+  margin-bottom: 12px;
 }
 
-/* -------------------------
-   메인 카테고리 버튼
-------------------------- */
 #categoryBar .btn {
-  background: #eae9e9;       /* 선택되지 않은 메인 버튼 회색 */
+  background: #f4f4f4;               /* 선택되지 않은 색 */
   color: #5a402c;
   border: 2px solid var(--accent);
-  padding:12px 18px;
-  border-radius:10px;
-  font-weight:700;
-  cursor:pointer;
+  padding: 12px 0;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
   transition: all .18s;
-  text-align:center;
-  flex:1 1 120px;
-  box-sizing:border-box;
-}
-
-#categoryBar .btn:hover {
-  transform: translateY(-3px);
-  background: var(--accent);
-  color: #fff;
+  text-align: center;
+  flex: 1 1 0;                    /* 균등하게 늘어나도록 */
+  box-sizing: border-box;
 }
 
 #categoryBar .btn.active {
-  background: var(--accent); /* 선택된 버튼 색상 */
-  color: #fff;
-  box-shadow:0 6px 14px rgba(0,0,0,0.15);
-}
-
-/* -------------------------
-   서브 카테고리 버튼
-------------------------- */
-#subBar .btn {
-  background:#FAECC5;
-  color:#5a402c;
-  border:2px solid var(--accent);
-  padding:12px 18px;
-  border-radius:10px;
-  font-weight:700;
-  cursor:pointer;
-  transition: all .18s;
-  text-align:center;
-  flex:1 1 120px;
-  box-sizing:border-box;
-}
-
-#subBar .btn:hover {
   background: var(--accent);
-  color:#fff;
+  color: #fff;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+#categoryBar .btn:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+/* ----------------- 서브 카테고리 ----------------- */
+#subBar {
+  max-width: var(--maxw);
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+#subBar .btn {
+  background: #FAECC5;
+  color: #5a402c;
+  border: 2px solid var(--accent);
+  padding: 10px 0;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .18s;
+  text-align: center;
+  flex: 1 1 0;
+  box-sizing: border-box;
 }
 
 #subBar .btn.active {
   background: var(--accent);
-  color:#fff;
-  box-shadow:0 6px 14px rgba(0,0,0,0.15);
+  color: #fff;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
 }
 
-/* -------------------------
-   리스트
-------------------------- */
+#subBar .btn:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+/* ----------------- 리스트 & 상세 페이지 ----------------- */
 #list{
   max-width:var(--maxw);
   width:100%;
@@ -117,9 +130,6 @@ h1{
   box-shadow:0 8px 20px rgba(0,0,0,0.12);
 }
 
-/* -------------------------
-   상세 정보
-------------------------- */
 #detail{
   max-width:360px;
   width:100%;
@@ -131,9 +141,6 @@ h1{
   text-align:left;
 }
 
-/* -------------------------
-   지도
-------------------------- */
 #map{
   width:100%;
   max-width:var(--maxw);
@@ -143,10 +150,11 @@ h1{
   box-shadow:0 2px 8px rgba(0,0,0,0.08);
 }
 
-/* -------------------------
-   기타
-------------------------- */
-.muted{color:#666; font-weight:500; font-size:13px;}
+.muted{
+  color:#666;
+  font-weight:500;
+  font-size:13px;
+}
 
 input#searchInput{
   width:100%;
@@ -158,11 +166,12 @@ input#searchInput{
   font-size:14px;
 }
 
-/* -------------------------
-   반응형
-------------------------- */
+/* ----------------- 모바일 대응 ----------------- */
 @media (max-width:430px){
-  .btn{flex:1 1 100px; padding:10px 14px; font-size:14px;}
+  #categoryBar .btn, #subBar .btn {
+    padding: 10px 0;
+    font-size: 14px;
+  }
 }
 
 </style>
