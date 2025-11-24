@@ -6,21 +6,165 @@
 <title>Busan!!!</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 <style>
-:root{--maxw:430px;--accent:#F2CB61;--bg:#f5f5f5;}
-body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin:0; padding:16px; background:var(--bg); color:#333; display:flex; flex-direction:column; align-items:center;}
-h1{font-size:24px; color:#2c3e50; margin:6px 0 6px; text-align:center;}
-.bar{max-width:var(--maxw); width:100%; display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-bottom:12px;}
-.btn{background:#FAECC5; color:#5a402c; border:2px solid var(--accent); padding:12px 18px; border-radius:10px; font-weight:700; cursor:pointer; transition:all .18s; text-align:center; flex:1 1 120px; box-sizing:border-box;}
-.btn:hover{transform:translateY(-3px); background:var(--accent); color:#fff;}
-.btn.active{background:var(--accent); color:#fff; box-shadow:0 6px 14px rgba(0,0,0,0.15);}
-#list{max-width:var(--maxw); width:100%; display:grid; gap:12px; margin-top:10px; max-height:300px; overflow-y:auto;}
-.shop-item{background:#fff; padding:14px 16px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.08); cursor:pointer; font-weight:600; text-align:left;}
-.shop-item:hover{transform:translateY(-4px); box-shadow:0 8px 20px rgba(0,0,0,0.12);}
-#detail{max-width:360px; width:100%; background:#fff; padding:16px; border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,0.08); margin-top:12px; text-align:left;}
-#map{width:100%; max-width:var(--maxw); height:420px; border-radius:12px; margin-top:14px; box-shadow:0 2px 8px rgba(0,0,0,0.08);}
+:root{
+  --maxw:430px;
+  --accent:#F2CB61;
+  --bg:#f5f5f5;
+}
+
+body{
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin:0; padding:16px; background:var(--bg); color:#333;
+  display:flex; flex-direction:column; align-items:center;
+}
+
+h1{
+  font-size:24px; color:#2c3e50; margin:6px 0 6px; text-align:center;
+}
+
+.bar{
+  max-width:var(--maxw);
+  width:100%;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin-bottom:12px;
+}
+
+/* -------------------------
+   메인 카테고리 버튼
+------------------------- */
+#categoryBar .btn {
+  background: #efeeee;       /* 선택되지 않은 메인 버튼 회색 */
+  color: #5a402c;
+  border: 2px solid var(--accent);
+  padding:12px 18px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+  transition: all .18s;
+  text-align:center;
+  flex:1 1 120px;
+  box-sizing:border-box;
+}
+
+#categoryBar .btn:hover {
+  transform: translateY(-3px);
+  background: var(--accent);
+  color: #fff;
+}
+
+#categoryBar .btn.active {
+  background: var(--accent); /* 선택된 버튼 색상 */
+  color: #fff;
+  box-shadow:0 6px 14px rgba(0,0,0,0.15);
+}
+
+/* -------------------------
+   서브 카테고리 버튼
+------------------------- */
+#subBar .btn {
+  background:#FAECC5;
+  color:#5a402c;
+  border:2px solid var(--accent);
+  padding:12px 18px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+  transition: all .18s;
+  text-align:center;
+  flex:1 1 120px;
+  box-sizing:border-box;
+}
+
+#subBar .btn:hover {
+  background: var(--accent);
+  color:#fff;
+}
+
+#subBar .btn.active {
+  background: var(--accent);
+  color:#fff;
+  box-shadow:0 6px 14px rgba(0,0,0,0.15);
+}
+
+/* -------------------------
+   리스트
+------------------------- */
+#list{
+  max-width:var(--maxw);
+  width:100%;
+  display:grid;
+  gap:12px;
+  margin-top:10px;
+  max-height:300px;
+  overflow-y:auto;
+}
+
+.shop-item{
+  background:#fff;
+  padding:14px 16px;
+  border-radius:12px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  cursor:pointer;
+  font-weight:600;
+  text-align:left;
+}
+
+.shop-item:hover{
+  transform:translateY(-4px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* -------------------------
+   상세 정보
+------------------------- */
+#detail{
+  max-width:360px;
+  width:100%;
+  background:#fff;
+  padding:16px;
+  border-radius:12px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.08);
+  margin-top:12px;
+  text-align:left;
+}
+
+/* -------------------------
+   지도
+------------------------- */
+#map{
+  width:100%;
+  max-width:var(--maxw);
+  height:420px;
+  border-radius:12px;
+  margin-top:14px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* -------------------------
+   기타
+------------------------- */
 .muted{color:#666; font-weight:500; font-size:13px;}
-input#searchInput{width:100%; max-width:var(--maxw); padding:8px 12px; margin-bottom:8px; border-radius:8px; border:1px solid #ccc; font-size:14px;}
-@media (max-width:430px){.btn{flex:1 1 100px; padding:10px 14px; font-size:14px;}}
+
+input#searchInput{
+  width:100%;
+  max-width:var(--maxw);
+  padding:8px 12px;
+  margin-bottom:8px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:14px;
+}
+
+/* -------------------------
+   반응형
+------------------------- */
+@media (max-width:430px){
+  .btn{flex:1 1 100px; padding:10px 14px; font-size:14px;}
+}
+
 </style>
 </head>
 <body>
@@ -28,9 +172,9 @@ input#searchInput{width:100%; max-width:var(--maxw); padding:8px 12px; margin-bo
 <input type="text" id="searchInput" placeholder="가게 이름 검색 (전체)">
 
 <div class="bar" id="categoryBar">
-  <button class="btn" data-cat="식당">식당</button>
-  <button class="btn" data-cat="카페">카페</button>
-  <button class="btn" data-cat="소품샵">소품샵</button>
+  <button class="btn main" data-cat="식당">식당</button>
+  <button class="btn main" data-cat="카페">카페</button>
+  <button class="btn main" data-cat="소품샵">소품샵</button>
 </div>
 <div class="bar" id="subBar"></div>
 <div id="list"></div>
@@ -43,57 +187,57 @@ input#searchInput{width:100%; max-width:var(--maxw); padding:8px 12px; margin-bo
 const data = {
   "식당": {
     "횟집": [
-      { name: "광안리 식감", address: "부산 수영구 광남로 125", hours: "11:00~23:00", note: "신선한 활어회, 바다 전망", lat: 35.1621118, lng: 129.1282732 },
-      { name: "민락회타운", address: "부산 수영구 민락수변로 1 민락타운", hours: "09:00~02:00", note: "대형 회센터", lat: 35.1585693, lng: 129.127121 },
-      { name: "삼삼횟집", address: "부산 수영구 광안해변로 278번길 22", hours: "12:00~22:00", note: "가성비 모둠회, 야경", lat: 35.1621118, lng: 129.1282732 }
+      { name: "광안리 식감", address: "부산 수영구 광남로 125", hours: "11:00~23:00", note: "신선한 활어회, 바다 전망", lat: 35.152816, lng: 129.116229 },
+      { name: "민락회타운", address: "부산 수영구 민락수변로 1 민락타운", hours: "09:00~02:00", note: "대형 회센터", lat: 35.155561, lng: 129.123838 },
+      { name: "밀락더마켓", address: "부산 수영구 민락수변로17번길 56", hours: "10:00~24:00", note: "복합문화센터, 마켓", lat: 35.154214, lng: 129.127039 },
+      { name: "삼삼횟집", address: "부산 수영구 광안해변로 278번길 22", hours: "12:00~22:00", note: "가성비 모둠회, 야경", lat: 35.154974, lng: 129.124315 }
     ],
     "브런치카페": [
-      { name: "마메루", address: "부산 수영구 남천바다로15번길 91", hours: "10:00~18:30", note: "감성 브런치", lat: 35.1621118, lng: 129.1282732 },
-      { name: "헬멧", address: "부산 수영구 수영로554번가길 22", hours: "09:00~19:00", note: "루프탑 브런치", lat: 35.1621118, lng: 129.1282732 },
-      { name: "굿모닝홍콩 전포", address: "부산 부산진구 서전로47번길 19", hours: "11:30~20:00(월 휴무)", note: "전포 카페거리", lat: 35.1553811, lng: 129.0638221 }
+      { name: "마메루", address: "부산 수영구 남천바다로15번길 91", hours: "10:00~18:30", note: "감성 브런치", lat: 35.153336, lng: 129.1141742 },
+      { name: "헬멧", address: "부산 수영구 수영로554번가길 22 1-2층", hours: "09:00~19:00", note: "루프탑 브런치", lat: 35.153976, lng: 129.114909 },
+      { name: "카페왈츠", address: "부산 수영구 광안로49번길 62", hours: "12:00~18:00(화 휴무)", note: "브런치, 팬케이크", lat: 35.1621118, lng: 129.1282732 },
+      
     ],
     "기타": [
-      { name: "밀락더마켓", address: "부산 수영구 민락수변로17번길 56", hours: "10:00~24:00", note: "복합문화센터, 마켓", lat: 35.1544048, lng: 129.1296085 },
-      { name: "수변최고돼지국밥 민락본점", address: "부산 수영구 광안해변로370번길 9-32", hours: "24시간", note: "진한 국밥", lat: 35.1585693, lng: 129.127121 },
-      { name: "이가네 떡볶이", address: "부산 중구 부평1길 48", hours: "10:00~19:30(일 휴무)", note: "깡통시장, 가래떡 떡볶이", lat: 35.100191, lng: 129.026899 },
-      { name: "이재모 피자 본점", address: "부산 중구 광복중앙로 31", hours: "10:00~21:10(일 휴무)", note: "이재명 피자", lat: 35.0985219, lng: 129.0337613 },
-      { name: "포도 해운대전통시장점", address: "부산 해운대구 구남로41번길 7", hours: "15:00~24:00", note: "와인 슬러시", lat: 35.1615306, lng: 129.1623486 }
+      { name: "굿모닝홍콩 전포", address: "부산 부산진구 서전로47번길 19", hours: "11:30~22:00(월 휴무)", note: "홍콩식 메뉴, 프렌치토스트", lat: 35.158753, lng: 129.064433},
+      { name: "이재모 피자 서면점", address: "부산 부산진구 전포대로209번길 21", hours: "10:00~21:10(일 휴무)", note: "이재명 피자", lat: 35.0985219, lng: 129.0337613 },
+      { name: "수변최고돼지국밥 민락본점(광안리)", address: "부산 수영구 광안해변로370번길 9-32", hours: "24시간", note: "진한 국밥", lat: 35.156760, lng: 129.134280 },
+      { name: "포도 해운대전통시장점(해운대)", address: "부산 해운대구 구남로41번길 7", hours: "15:00~24:00", note: "와인 슬러시", lat: 35.160965, lng: 129.161682 },
+      { name: "이가네 떡볶이", address: "부산 중구 부평1길 48", hours: "10:00~19:30(일 휴무)", note: "깡통시장, 가래떡 떡볶이", lat: 35.155331, lng: 129.063986 }
     ]
   },
   "카페": {
     "서면": [
-      { name: "압트커피", address: "부산 부산진구 전포대로226-8", hours: "10:00~21:00", note: "피스타치오 티라미수, 레몬케이크", lat: 35.1550707, lng: 129.0627787 },
-      { name: "잇인올투고", address: "부산 부산진구 동성로 55-1", hours: "11:00~21:00(월 휴무)", note: "크레이프", lat: 35.1543647, lng: 129.0661527 },
-      { name: "므므", address: "부산 부산진구 동성로61번길 21-18", hours: "12:00~21:00", note: "파블로바, 말차", lat: 35.1553811, lng: 129.0638221 },
-      { name: "사랑방다실", address: "부산 부산진구 서전로57번길 4", hours: "12:00~23:00", note: "레트로, 파르페", lat: 35.1572101, lng: 129.0592636 },
-      { name: "223", address: "부산 부산진구 동성로 35", hours: "11:00~20:00(화 휴무)", note: "딸기 롤케이크, 밤푸딩", lat: 35.1554723, lng: 129.0639468 },
-      { name: "린그리메", address: "부산 부산진구 동성로87번길 9", hours: "12:30~19:00(수 휴무)", note: "토마토 주스, 행운토스트", lat: 35.1543647, lng: 129.0661527 }
+      { name: "압트커피", address: "부산 부산진구 전포대로226-8", hours: "10:00~21:00", note: "피스타치오 티라미수, 레몬케이크", lat: 35.156868, lng: 129.065812 },
+      { name: "잇인올투고", address: "부산 부산진구 동성로 55-1", hours: "11:00~21:00(월 휴무)", note: "크레이프", lat: 35.155509, lng: 129.068184 },
+      { name: "므므", address: "부산 부산진구 동성로61번길 21-18", hours: "12:00~21:00", note: "파블로바, 말차", lat: 35.156045, lng: 129.067436 },
+      { name: "사랑방다실", address: "부산 부산진구 서전로57번길 4 3층", hours: "12:00~23:00", note: "레트로, 파르페", lat: 35.157945, lng: 129.066218 },
+      { name: "223", address: "부산광역시 부산진구 동성로 35", hours: "11:00~20:00(화 휴무)", note: "딸기 롤케이크, 밤푸딩", lat: 35.153602, lng: 129.068278 },
+      { name: "린그리메", address: "부산 부산진구 동성로87번길 9 2층", hours: "12:30~19:00(수 휴무)", note: "토마토 주스, 행운토스트", lat: 35.158007, lng: 129.067726 }
     ],
     "광안리": [
-      { name: "카페왈츠", address: "부산 수영구 광안로49번길 62", hours: "12:00~18:00(화 휴무)", note: "팬케이크, 파르페", lat: 35.1621118, lng: 129.1282732 },
-      { name: "Etalee", address: "부산 수영구 광안해변로279번길 25", hours: "11:00~20:00", note: "에그타르트", lat: 35.1621118, lng: 129.1282732 }
+      { name: "Etalee", address: "부산 수영구 광안해변로279번길 25", hours: "11:00~20:00", note: "에그타르트", lat: 35.156769, lng: 129.125236 }
     ]
     
   },
   "소품샵": {
     "서면": [
-      { name: "누셀렉", address: "부산 부산진구 전포대로 240", hours: "12:00~20:00", note: "라이프스타일 셀렉트샵, 패션·향수", lat: 35.1634824, lng: 129.0647003 },
-      { name: "페이크 마켓", address: "부산 부산진구 서전로58번길 40", hours: "14:00~22:00", note: "빈티지 감성 리빙소품", lat: 35.1543647, lng: 129.0661527 },
-      { name: "칠스", address: "부산 부산진구 전포대로209번길 39", hours: "12:00~21:00", note: "키덜트 감성, 캐릭터 소품", lat: 35.1550707, lng: 129.0627787 },
-      { name: "오브젝트 서면점", address: "부산 부산진구 전포대로209번길 11", hours: "12:00~21:00", note: "전국 유명 편집 소품샵", lat: 35.1553811, lng: 129.0638221 },
-      { name: "이우이에", address: "부산 부산진구 전포대로216번길 28", hours: "12:00~20:00", note: "도자기·핸드메이드 소품", lat: 35.1557725, lng: 129.0663441 },
-      { name: "애드", address: "부산 부산진구 전포대로199번길 12", hours: "12:00~21:00", note: "문구·스티커·향초", lat: 35.1545104, lng: 129.0638327 },
-      { name: "기푸토", address: "부산 부산진구 전포대로255번길 29", hours: "13:00~19:00(월 휴무)", note: "일본 감성 소품", lat: 35.1593763, lng: 129.0637661 },
-      { name: "에떼오브제", address: "부산 부산진구 동성로 29-1", hours: "12:00~19:00(월 휴무)", note: "핸드메이드 소품·악세사리", lat: 35.1606144, lng: 129.064973 }
+      { name: "누셀렉", address: "부산 부산진구 전포대로 240", hours: "12:00~20:00", note: "라이프스타일 셀렉트샵, 패션·향수", lat: 35.157909, lng: 129.065659 },
+      { name: "페이크 마켓", address: "부산 부산진구 서전로58번길 40", hours: "14:00~22:00", note: "빈티지 감성 리빙소품", lat: 35.156098, lng: 129.066062 },
+      { name: "칠스", address: "부산 부산진구 전포대로209번길 39", hours: "12:00~21:00", note: "키덜트 감성, 캐릭터 소품", lat: 35.155337, lng: 129.063196 },
+      { name: "오브젝트 서면점", address: "부산 부산진구 전포대로209번길 11", hours: "12:00~21:00", note: "전국 유명 편집 소품샵", lat: 35.155353, lng: 129.064476 },
+      { name: "이우이에", address: "부산 부산진구 전포대로216번길 28", hours: "12:00~20:00", note: "도자기·핸드메이드 소품", lat: 35.155753, lng: 129.067123 },
+      { name: "애드", address: "부산 부산진구 전포대로199번길 12", hours: "12:00~21:00", note: "문구·스티커·향초", lat: 35.154622, lng: 129.064737 },
+      { name: "기푸토", address: "부산 부산진구 전포대로255번길 29", hours: "13:00~19:00(월 휴무)", note: "일본 감성 소품", lat: 35.159201, lng: 129.063772 },
+      { name: "에떼오브제", address: "부산 부산진구 동성로 29-1", hours: "12:00~19:00(월 휴무)", note: "핸드메이드 소품·악세사리", lat: 35.153199, lng: 129.068291 }
     ],
     "광안리": [
-      { name: "브리즈 아카이브", address: "부산 수영구 수영로606번길 125", hours: "11:00~19:00", note: "디퓨저·룸스프레이·엽서", lat: 35.1592122, lng: 129.1172909 },
-      { name: "코지모지", address: "부산 수영구 광남로 175", hours: "11:00~20:00", note: "반려묘 있는 소품샵, 유니크 그릇", lat: 35.1588481, lng: 129.1228351 },
-      { name: "분홍이네", address: "부산 수영구 광안로45번길 2", hours: "11:00~21:00", note: "광안리 최대 규모, 테마존 운영", lat: 35.1558987, lng: 129.1174007 }
-    ],
-    "기타": [
-      { name: "링링", address: "부산 수영구 광안로 19", hours: "11:00~19:00", note: "스티커 사진", lat: 35.1559572, lng: 129.1156257 }
+      { name: "브리즈 아카이브", address: "부산 수영구 수영로606번길 125", hours: "11:00~19:00", note: "디퓨저·룸스프레이·엽서", lat: 35.158828, lng: 129.120352 },
+      { name: "코지모지", address: "부산 수영구 광남로 175", hours: "11:00~20:00", note: "반려묘 있는 소품샵, 유니크 그릇", lat: 35.156786, lng: 129.119272 },
+      { name: "분홍이네", address: "부산 수영구 광안로45번길 2", hours: "11:00~21:00", note: "광안리 최대 규모, 테마존 운영", lat: 35.155426, lng: 129.117368 },
+      {name: "링링", address: "부산 수영구 광안로 19", hours: "11:00~19:00", note: "스티커 사진", lat: 35.156577, lng: 129.115039 }
     ]
+    
   }
 };
 
@@ -147,7 +291,10 @@ function renderSubcategories(category){
   subBar.innerHTML=""; currentSub=""; currentSearch=""; searchInput.value="";
   let subs = category==="식당"?["횟집","브런치카페","기타"]:["서면","광안리","기타"];
   subs.forEach(s=>{
-    const btn=document.createElement('button'); btn.className='btn'; btn.textContent=s; btn.dataset.sub=s;
+    const btn=document.createElement('button');
+    btn.className='btn sub';   // ★ sub-btn 추가
+    btn.textContent=s;
+    btn.dataset.sub=s;
     btn.addEventListener('click',()=>{ setActiveButtons(subBar,btn); currentSub=s; renderList(); });
     subBar.appendChild(btn);
   });
