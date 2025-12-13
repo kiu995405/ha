@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Network Packet Flow Prototype</title>
+
+<style>
+  body {
+    margin: 0;
+    background: #0f172a;
+    color: #e5e7eb;
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+
+  h2 {
+    margin-top: 20px;
+  }
+
+  #network {
+    position: relative;
+    width: 900px;
+    height: 400px;
+    margin: 30px auto;
+    background: #020617;
+    border-radius: 16px;
+    border: 1px solid #1e293b;
+  }
+
+  /* 노드 */
+  .node {
+    position: absolute;
+    width: 90px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .client { background: #2563eb; }
+  .router { background: #22c55e; }
+  .server { background: #f97316; }
+
+  /* 위치 */
+  #client { left: 40px; top: 170px; }
+  #r1 { left: 260px; top: 80px; }
+  #r2 { left: 260px; top: 260px; }
+  #r3 { left: 520px; top: 170px; }
+  #server { left: 760px; top: 170px; }
+
+  /* 선 */
+  svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+  }
+
+  line {
+    stroke: #334155;
+    stroke-width: 3;
+  }
+
+  /* 패킷 */
+  .packet {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: yellow;
+    border-radius: 50%;
+    box-shadow: 0 0 8px yellow;
+  }
+
+  button {
+    background: #38bdf8;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  button:hover {
+    background: #0ea5e9;
+  }
+
+</style>
+</head>
+<body>
+
+<h2>📡 네트워크 패킷 흐름 시각화 프로토타입</h2>
+
+<div id="network">
+
+  <!-- 연결선 -->
+  <svg width="900" height="400">
+    <line x1="130" y1="200" x2="260" y2="110"/>
+    <line x1="130" y1="200" x2="260" y2="290"/>
+    <line x1="350" y1="110" x2="520" y2="200"/>
+    <line x1="350" y1="290" x2="520" y2="200"/>
+    <line x1="610" y1="200" x2="760" y2="200"/>
+  </svg>
+
+  <!-- 노드 -->
+  <div class="node client" id="client">Client</div>
+  <div class="node router" id="r1">Router A</div>
+  <div class="node router" id="r2">Router B</div>
+  <div class="node router" id="r3">Router C</div>
+  <div class="node server" id="server">Server</div>
+</div>
+
+<button onclick="sendPacket()">패킷 전송</button>
+
+<script>
+function sendPacket() {
+  const path1 = [
+    {x:130, y:200},
+    {x:260, y:110},
+    {x:520, y:200},
+    {x:760, y:200}
+  ];
+
+  const path2 = [
+    {x:130, y:200},
+    {x:260, y:290},
+    {x:520, y:200},
+    {x:760, y:200}
+  ];
+
+  // 랜덤 라우팅
+  const path = Math.random() > 0.5 ? path1 : path2;
+
+  const packet = document.createElement("div");
+  packet.className = "packet";
+  document.getElementById("network").appendChild(packet);
+
+  let i = 0;
+  let t = 0;
+
+  function move() {
+    const p1 = path[i];
+    const p2 = path[i + 1];
+    if (!p2) {
+      packet.remove();
+      return;
+    }
+
+    const x = p1.x + (p2.x - p1.x) * t;
+    const y = p1.y + (p2.y - p1.y) * t;
+
+    packet.style.left = x + "px";
+    packet.style.top = y + "px";
+
+    t += 0.02;
+    if (t >= 1) {
+      t = 0;
+      i++;
+    }
+
+    requestAnimationFrame(move);
+  }
+
+  move();
+}
+</script>
+
+</body>
+</html>
+
